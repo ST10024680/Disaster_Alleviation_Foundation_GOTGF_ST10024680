@@ -1,0 +1,84 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.App.MemberModel
+@{
+    Layout = null;
+}
+
+<head>
+    <title>User - Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/volunteer.css" />
+    <link rel="stylesheet" href="~/css/Main.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Create a Task</h2>
+            <form method="post" >
+                <div class="form-group">
+                    <label for="title" class="control-label"></label>
+                    <input asp-for="title" class="form-control" required />
+                    <span asp-validation-for="title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="control-label"></label>
+                    <textarea asp-for="description" class="form-control" required></textarea>
+                    <span asp-validation-for="description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="scheduledDate" class="control-label"></label>
+                    <input asp-for="ScheduledDate" type="datetime-local" class="form-control" required min="1753-01-01T00:00" max="9999-12-31T23:59" />
+                    <span asp-validation-for="ScheduledDate" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Task</button>
+            </form>
+        </section>
+
+        <section>
+            <h3>My Assigned Tasks</h3>
+
+            @if (Model.Tasks != null && Model.Tasks.Count == 0)
+            {
+                <p>No tasks assigned yet.</p>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Scheduled Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var task in Model.Tasks)
+                        {
+                            <tr>
+                                <td>@task.Title</td>
+                                <td>@task.Description</td>
+                                <td>@task.ScheduledDate.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            
+
+
+
+
+        </section>
+    </main>
+</body>

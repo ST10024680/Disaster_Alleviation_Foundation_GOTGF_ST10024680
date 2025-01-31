@@ -1,0 +1,298 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.App.AdminModel
+@{
+    Layout = null;
+}
+
+<head>
+    <title>Admin - Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/Main.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="admin-dashboard">
+            <h2>Manage Users</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@user.UserID">Edit</a> |
+                                <button class="delete-user-btn" data-id="@user.UserID" data-name="@user.Name">Delete</button>
+                            </td>
+                        </tr>
+                        
+                    }
+                </tbody>
+            </table>
+            <!-- Delete User Confirmation Modal -->
+            <div id="deleteUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Confirm Deletion</h3>
+                    <p id="userModalMessage">Are you sure you want to delete this user?</p>
+                    <form id="deleteUserForm" method="post" asp-page="./Admin" asp-page-handler="DeleteUser">
+                        <input type="hidden" name="id" id="UserID" />
+                        <button type="submit">Yes, Delete</button>
+                        <button type="button" id="cancelUserDelete">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            
+
+        </section>
+
+        <section class="admin-dashboard">
+            <h2>Manage Volunteers</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var volunteer in Model.Volunteers)
+                    {
+                        <tr>
+                            <td>@volunteer.VName</td>
+                            <td>@volunteer.Email</td>
+                            <td>@volunteer.VPhoneNumber</td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@volunteer.VolunteerID">Edit</a> |
+                                <button class="delete-volunteer-btn" data-id="@volunteer.VolunteerID" data-name="@volunteer.VName">Delete</button>
+                            </td>
+                        </tr>
+                        
+                    }
+                </tbody>
+            </table>
+            <!-- Delete Volunteer Confirmation Modal -->
+            <div id="deleteVolunteerModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Confirm Deletion</h3>
+                    <p id="volunteerModalMessage">Are you sure you want to delete this volunteer?</p>
+                    <form id="deleteVolunteerForm" method="post" asp-page="./Admin" asp-page-handler="DeleteVolunteer">
+                        <input type="hidden" name="id" id="VolunteerID" />
+                        <button type="submit">Yes, Delete</button>
+                        <button type="button" id="cancelVolunteerDelete">Cancel</button>
+                    </form>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="admin-dashboard">
+            <h2>Manage Reports</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Disaster Type</th>
+                        <th>Severity</th>
+                        <th>Description</th>
+                        <th>Date Reported</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var report in Model.IncidentReports)
+                    {
+                        <tr>
+                            <td>@report.Location</td>
+                            <td>@report.DisasterType</td>
+                            <td>@report.Severity</td>
+                            <td>@report.Description</td>
+                            <td>@report.ReportDate.ToShortDateString()</td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@report.IncidentReportsID">Edit</a> |
+                                <button class="delete-report-btn" data-id="@report.IncidentReportsID" data-name="@report.Location">Delete</button>
+                            </td>
+                        </tr>
+                       
+                    }
+                </tbody>
+            </table>
+            <!-- Delete Report Confirmation Modal -->
+            <div id="deleteReportModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Confirm Deletion</h3>
+                    <p id="reportModalMessage">Are you sure you want to delete this report?</p>
+                    <form id="deleteReportForm" method="post" asp-page="./Admin" asp-page-handler="DeleteIncidentReport">
+                        <input type="hidden" name="id" id="IncidentReportsID" />
+                        <button type="submit">Yes, Delete</button>
+                        <button type="button" id="cancelReportDelete">Cancel</button>
+                    </form>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="admin-dashboard">
+            <h2>Manage Tasks</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Scheduled Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model.Tasks)
+                    {
+                        <tr>
+                            <td>@task.Title</td>
+                            <td>@task.Description</td>
+                            <td>@task.ScheduledDate</td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@task.TaskID">Edit</a> |
+                                <button class="delete-task-btn" data-id="@task.TaskID" data-name="@task.Title">Delete</button>
+                            </td>
+                        </tr>
+                        
+
+                    }
+                </tbody>
+            </table>
+            <!-- Delete Task Confirmation Modal -->
+            <div id="deleteTaskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Confirm Deletion</h3>
+                    <p id="taskModalMessage">Are you sure you want to delete this task?</p>
+                    <form id="deleteTaskForm" method="post" asp-page="./Admin" asp-page-handler="DeleteTask">
+                        <input type="hidden" name="id" id="TaskID" />
+                        <button type="submit">Yes, Delete</button>
+                        <button type="button" id="cancelTaskDelete">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            // Delete User Modal
+            $(".delete-user-btn").click(function () {
+                var UserID = $(this).data("id");
+                var userName = $(this).data("name");
+                $("#userModalMessage").text("Are you sure you want to delete the user " + userName + "?");
+                $("#UserID").val(UserID);
+                $("#deleteUserModal").show();
+            });
+
+            // Delete Volunteer Modal
+            $(".delete-volunteer-btn").click(function () {
+                var VolunteerID = $(this).data("id");
+                var volunteerName = $(this).data("name");
+                $("#volunteerModalMessage").text("Are you sure you want to delete the volunteer " + volunteerName + "?");
+                $("#VolunteerID").val(VolunteerID);
+                $("#deleteVolunteerModal").show();
+            });
+
+
+            // Delete Report Modal
+            $(".delete-report-btn").click(function () {
+                var IncidentReportsID = $(this).data("id");
+                var reportLocation = $(this).data("name");
+                $("#reportModalMessage").text("Are you sure you want to delete the report for " + reportLocation + "?");
+                $("#IncidentReportsID").val(IncidentReportsID);
+                $("#deleteReportModal").show();
+            });
+
+            // Delete Task Modal
+            $(".delete-task-btn").click(function () {
+                var TaskID = $(this).data("id");
+                var taskTitle = $(this).data("name");
+                $("#taskModalMessage").text("Are you sure you want to delete the task " + taskTitle + "?");
+                $("#TaskID").val(TaskID);
+                $("#deleteTaskModal").show();
+            });
+
+            // Close modal
+            $(".close, #cancelDelete, #cancelVolunteerDelete, #cancelReportDelete, #cancelTaskDelete").click(function () {
+                $(".modal").hide();
+            });
+
+            $(window).click(function (event) {
+                if ($(event.target).hasClass("modal")) {
+                    $(".modal").hide();
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+
+
+</body>

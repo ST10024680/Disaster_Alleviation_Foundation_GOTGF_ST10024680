@@ -1,0 +1,60 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.Auth.RegisterModel
+@{
+    Layout = null; // Disable the default layout for this page
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="screen-1">
+    <form method="post">
+        
+            <div class="name">
+                <label for="name">Name</label>
+                <div class="sec-2">
+                    <input type="text" name="Name" placeholder="User Name" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="email">
+                <label for="email">Email Address</label>
+                <div class="sec-2">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="email" name="Email" placeholder="Username@gmail.com" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="password">
+                <label for="password">Password</label>
+                <div class="sec-2">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input class="pas" type="password" name="Password" placeholder="············" asp-for="Password" />
+                    <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="password">
+                <label for="confirmpassword">Confirm Password</label>
+                <div class="sec-2">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input class="pas" type="password" name="ConfirmPassword" placeholder="············" asp-for="ConfirmPassword" />
+                    <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="login">Register</button>
+        
+    </form>
+
+    <div class="footer">
+        <a asp-page="./Login">Already have an account? Login</a>
+    </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>

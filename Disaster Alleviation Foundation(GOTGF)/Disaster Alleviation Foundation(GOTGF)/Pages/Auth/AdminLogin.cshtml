@@ -1,0 +1,45 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.Auth.AdminLoginModel
+@{
+    Layout = null; 
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css">
+
+</head>
+<body>
+    <div class="screen-1">
+        <form method="post">
+
+
+            <div class="email">
+                <label for="email">Email Address</label>
+                <div class="sec-2">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input asp-for="AEmail" name="AEmail" placeholder="Username@gmail.com" />
+                    <span asp-validation-for="AEmail" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="password">
+                <label for="password">Password</label>
+                <div class="sec-2">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input class="pas" asp-for="APassword" type="password" placeholder="············" />
+                    <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+                    <span asp-validation-for="APassword" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="login">Login </button>
+
+        </form>
+
+        <div class="footer">
+            <span>
+                <a asp-page="./Register">Register</a>
+            </span>
+            <span><a asp-page="./Login">Log In</a></span>
+        </div>
+    </div>
+
+</body>
