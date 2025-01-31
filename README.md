@@ -1,4 +1,5 @@
 *Key Observations and Feedback*.
+
 • User Registration & Login
 − Observation: Users found the registration process straightforward but mentioned that the password requirements were unclear.
 − Planned Improvement: Enhance the user experience by incorporating visual cues for password requirements. Examples include notifying users that their password must consist of at least one uppercase letter, one number, and a special character.
