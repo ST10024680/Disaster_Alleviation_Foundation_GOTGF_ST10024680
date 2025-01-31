@@ -1,0 +1,57 @@
+﻿@page
+@model HomeModel
+@{
+    Layout = null;
+}
+<head>
+    
+    <title>Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/Main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Join Hands for Humanity</h2>
+                <p>Help communities in need by reporting disasters, donating resources, or volunteering your time.</p>
+                <a asp-page="/App/Volunteer" class="btn-primary">Get Started</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <h3>Report Incidents</h3>
+                <p>Submit reports about natural disasters or emergencies in your area.</p>
+            </div>
+            <div class="feature">
+                <h3>Donate Resources</h3>
+                <p>Contribute essential resources such as food, clothing, and medical supplies.</p>
+            </div>
+            <div class="feature">
+                <h3>Become a Volunteer</h3>
+                <p>Sign up to volunteer and help communities affected by disasters.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Humanitarian Aid Platform. All rights reserved.</p>
+    </footer>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

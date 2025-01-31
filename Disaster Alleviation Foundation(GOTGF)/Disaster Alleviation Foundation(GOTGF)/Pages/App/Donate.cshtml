@@ -1,0 +1,132 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.App.DonateModel
+@{
+    Layout = null;
+
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+
+<head>
+    <title>Make a Donation - Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/donate.css">
+    <link rel="stylesheet" href="~/css/Main.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="donation-form-container">
+            <h2>Make a Resource Donation</h2>
+
+            <form method="post">
+                <div class="form-group">
+                    <label for="resourceType">Resource Type:</label>
+                    <select asp-for="NewResourceDonation.ResourceType" class="form-control" required>
+                        <option value="">Select Resource Type</option>
+                        <option value="Food">Food</option>
+                        <option value="Clothes">Clothes</option>
+                        <option value="Toiletries">Toiletries</option>
+                        <option value="Toys">Toys</option>
+                        <option value="HouseHold Items">HouseHold Items</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" asp-for="NewResourceDonation.Description" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" asp-for="NewResourceDonation.Quantity" class="form-control" required />
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Resource Donation</button>
+            </form>
+
+        </section>
+
+        <h2>Manage Resource Donations</h2>
+        @if (Model.ResourceDonation != null && Model.ResourceDonation.Count == 0)
+        {
+            <p>No incident reports found.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Resource Type</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Donation Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var resourceDonation in Model.ResourceDonation)
+                    {
+                        <tr>
+                            <td>@resourceDonation.ResourceType</td>
+                            <td>@resourceDonation.Description</td>
+                            <td>@resourceDonation.Quantity</td>
+                            <td>@resourceDonation.DonationDate.ToShortDateString()</td>
+
+                            <td>
+                                @if (resourceDonation.IsDistributed)
+                                {
+                                    <span class="text-success">Distributed</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning">Pending</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!resourceDonation.IsDistributed)
+                                {
+                                    <form method="post" asp-page-handler="MarkAsDistributed" asp-route-donationId="@resourceDonation.DonationID">
+                                        <button type="submit" class="btn btn-success">Mark as Distributed</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        }
+    </main>
+    <footer>
+        <p>&copy; 2024 Humanitarian Aid Platform. All rights reserved.</p>
+    </footer>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

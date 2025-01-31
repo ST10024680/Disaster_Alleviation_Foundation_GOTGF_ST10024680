@@ -1,0 +1,110 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.App.ReportingModel
+@{
+    Layout = null;
+}
+
+<head>
+    
+    <title>Incident Report - Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/report.css">
+    <link rel="stylesheet" href="~/css/Main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="incident-report-form">
+            <h2>Report an Incident</h2>
+
+            <form method="post">
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" asp-for="NewIncidentReport.Location" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="disaster-type">Disaster Type:</label>
+                    <select asp-for="NewIncidentReport.DisasterType" class="form-control" required>
+                        <option value="Earthquake">Earthquake</option>
+                        <option value="Flood">Flood</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Storm">Storm</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="severity">Severity:</label>
+                    <select asp-for="NewIncidentReport.Severity" class="form-control" required>
+                        <option value="Minor">Minor</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Severe">Severe</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea asp-for="NewIncidentReport.Description" class="form-control" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Report</button>
+            </form>
+
+        </section>
+
+        <h2>Local Incident Reports</h2>
+
+        @if (Model.IncidentReports != null && Model.IncidentReports.Count == 0)
+        {
+            <p>No incident reports found.</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Disaster Type</th>
+                        <th>Severity</th>
+                        <th>Description</th>
+                        <th>Date Reported</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var report in Model.IncidentReports)
+                    {
+                        <tr>
+                            <td>@report.Location</td>
+                            <td>@report.DisasterType</td>
+                            <td>@report.Severity</td>
+                            <td>@report.Description</td>
+                            <td>@report.ReportDate.ToShortDateString()</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Humanitarian Aid Platform. All rights reserved.</p>
+    </footer>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

@@ -1,0 +1,61 @@
+﻿@page
+@model Disaster_Alleviation_Foundation_GOTGF_.Pages.App.VolunteerModel
+@{
+    Layout = null;
+}
+
+<head>
+    <title>Volunteer - Humanitarian Aid Platform</title>
+    <link rel="stylesheet" href="~/css/report.css">
+    <link rel="stylesheet" href="~/css/Main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Humanitarian Aid</h1>
+            <ul class="nav-links">
+                <li><a asp-page="/App/Home">Home</a></li>
+                <li><a asp-page="/App/Reporting">Report Incident</a></li>
+                <li><a asp-page="/App/Donate">Donate</a></li>
+                <li><a asp-page="/App/VolunteerLogin">Volunteer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="incident-report-form">
+            <h2>Register as a Volunteer</h2>
+            <form method="post" >
+               
+                <div class="form-group">
+                    <label for="Name">Name:</label>
+                    <input type="text" name="VName" placeholder="User Name" asp-for="VName" />
+                    <span asp-validation-for="VName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" name="VEmail" placeholder="Username@gmail.com" asp-for="VEmail" class="form-control" />
+                    <span asp-validation-for="VEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNum">Phone Number:</label>
+                    <input type="text" name="VPhoneNum" asp-for="VPhoneNum" class="form-control" />
+                    <span asp-validation-for="VPhoneNum" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+            <div class="footer">
+                <span>
+                    <a asp-page="./VolunteerLogin">Already Have An Account: SIGN IN</a>
+                </span>
+
+            </div>
+        </section>
+
+       
+    </main>
+
+
+</body>
+
